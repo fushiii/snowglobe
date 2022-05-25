@@ -2,34 +2,32 @@
   description = "A very basic flake";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+#    home-manager.url = "github:nix-community/home-manager/release-20.09";
+#    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs }: 
+  outputs = { nixpkgs, home-manager, ... }: 
+  
   let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
       inherit system;
-      config.allowUnfree = true;
-
+      config = { allowUnfree = true; };
     };
+
     lib = nixpkgs.lib;
+  
   in {
-    nixosConfigurations = {
-      snowglobe = lib.nixosSystem{
+        
+      nixosConfigurations = {
+        snowglobe = lib.nixosSystem {
         inherit system;
-        modules = [ ./configuration.nix ];
+          modules = [ 
+          ./configuration.nix 
+          ];
   
       };
-    
-  
-  
-  
-  
-  
-  
     };
-	
 	};
 
 }
