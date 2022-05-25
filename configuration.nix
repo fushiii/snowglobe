@@ -17,8 +17,60 @@ in
       ./modules/development/editor.nix
       ./modules/development/lang.nix
       ./modules/development/general.nix
+];
+
+
+
+ fonts.fonts = with pkgs; [
+    fira-code
+    fira
+    cooper-hewitt
+    font-awesome
+    ibm-plex
+    jetbrains-mono
+    iosevka
+    # bitmap
+    spleen
+    fira-code-symbols
+    powerline-fonts
+    nerdfonts
+  ];
+
+
+
+
+
+
+
+
+
+
+
+ programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true; # so that gtk works properly
+    extraPackages = with pkgs; [
+
+      rofi
+      wayland
+      xwayland
+      swaylock
+      swayidle
+      wl-clipboard
+      wf-recorder
+      mako # notification daemon
+      grim
+     #kanshi
+      slurp
+      alacritty # Alacritty is the default terminal in the config
+      dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
     ];
- boot.supportedFilesystems = [ "ntfs" ];
+  };
+
+programs.waybar.enable = true;
+
+
+boot.supportedFilesystems = [ "ntfs" ];
   #Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -42,10 +94,17 @@ in
 
   # Enable the X11 windowing system.
    services.xserver.enable = true;
+   services.xserver.imwheel.enable = true;
 
-   services.xserver.desktopManager.gnome.enable = true;
-   services.xserver.displayManager.gdm.enable = true;
-  
+
+
+   services.xserver.desktopManager.plasma5.enable = true;
+   services.xserver.displayManager.lightdm.enable = true;
+
+   
+ 
+
+
 
   # Configure keymap in X11
    services.xserver.layout = "br";

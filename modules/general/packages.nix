@@ -13,5 +13,8 @@
    vlc
    chromium
    firefox
+   imwheel
 ];
+
+
 }
