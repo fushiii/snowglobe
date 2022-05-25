@@ -23,7 +23,8 @@
         snowglobe = lib.nixosSystem {
         inherit system;
           modules = [ 
-          ./configuration.nix 
+            ./system/configuration.nix
+	    ./modules 
           ];
   
       };

@@ -12,11 +12,6 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./modules/general/packages.nix
-      ./modules/drivers/intel.nix
-      ./modules/development/editor.nix
-      ./modules/development/lang.nix
-      ./modules/development/general.nix
 ];
 
 
