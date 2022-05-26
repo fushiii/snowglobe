@@ -2,9 +2,9 @@
 
 {
 imports = [
-./lang.nix
 ./general.nix
 ./editor.nix
+./terminal.nix
 ];
 
   }

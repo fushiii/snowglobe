@@ -2,9 +2,7 @@
 
 {
 imports = [
-
-./packages.nix
-./fonts.nix
+  ./sway
 
 ];
 

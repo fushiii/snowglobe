@@ -14,6 +14,7 @@
    chromium
    firefox
    imwheel
+   xfce.thunar
 ];
 
 

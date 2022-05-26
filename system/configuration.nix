@@ -16,56 +16,7 @@ in
 
 
 
- fonts.fonts = with pkgs; [
-    fira-code
-    fira
-    cooper-hewitt
-    font-awesome
-    ibm-plex
-    jetbrains-mono
-    iosevka
-    # bitmap
-    spleen
-    fira-code-symbols
-    powerline-fonts
-    nerdfonts
-  ];
-
-
-
-
-
-
-
-
-
-
-
- programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true; # so that gtk works properly
-    extraPackages = with pkgs; [
-
-      rofi
-      wayland
-      xwayland
-      swaylock
-      swayidle
-      wl-clipboard
-      wf-recorder
-      mako # notification daemon
-      grim
-     #kanshi
-      slurp
-      alacritty # Alacritty is the default terminal in the config
-      dmenu # Dmenu is the default in the config but i recommend wofi since its wayland native
-    ];
-  };
-
-programs.waybar.enable = true;
-
-
-boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" ];
   #Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -90,16 +41,7 @@ boot.supportedFilesystems = [ "ntfs" ];
   # Enable the X11 windowing system.
    services.xserver.enable = true;
    services.xserver.imwheel.enable = true;
-
-
-
-   services.xserver.desktopManager.plasma5.enable = true;
    services.xserver.displayManager.lightdm.enable = true;
-
-   
- 
-
-
 
   # Configure keymap in X11
    services.xserver.layout = "br";
@@ -139,7 +81,23 @@ boot.supportedFilesystems = [ "ntfs" ];
 
        };
  };
-  
+
+ nixpkgs.overlays = [ (self: super: {
+  st = super.st.override {
+    patches = builtins.map super.fetchurl [
+        { url = "https://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff";
+          sha256 = "MpFprKx86vkBmV1uCJeRMIm3mdjNFQx/BMkC9KW46rI=";
+        }
+        {
+          url = "https://st.suckless.org/patches/dracula/st-dracula-0.8.5.diff";
+          sha256 = "H/6vLEJZdtB1rJOypWWFZLka41AdKhMZKRipLvwgvlE=";
+        }
+
+
+
+      ];
+  };
+}) ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
