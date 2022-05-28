@@ -20,7 +20,7 @@
   in {
         
       nixosConfigurations = {
-        snowglobe = lib.nixosSystem {
+        detroit = lib.nixosSystem {
         inherit system;
           modules = [ 
             ./system/configuration.nix

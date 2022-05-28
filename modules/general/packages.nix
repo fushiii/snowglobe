@@ -15,7 +15,10 @@
    firefox
    imwheel
    xfce.thunar
-];
+   unzip
+   gnome.zenity
+   pamixer
+  ];
 
 
 }

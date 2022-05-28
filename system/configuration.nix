@@ -5,8 +5,8 @@
 { config, pkgs, ... }:
 
 let
-  user = "flake";
-  host = "snowglobe";
+  user = "deviant";
+  host = "detroit";
 in
 {
   imports =
@@ -42,6 +42,7 @@ in
    services.xserver.enable = true;
    services.xserver.imwheel.enable = true;
    services.xserver.displayManager.lightdm.enable = true;
+   services.xserver.windowManager.dwm.enable = true;
 
   # Configure keymap in X11
    services.xserver.layout = "br";
@@ -60,7 +61,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
    programs.fish.enable = true;
-   
+   programs.ssh.startAgent = true; 
    users.users.${user} = {
      isNormalUser = true;
      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -81,23 +82,6 @@ in
 
        };
  };
-
- nixpkgs.overlays = [ (self: super: {
-  st = super.st.override {
-    patches = builtins.map super.fetchurl [
-        { url = "https://st.suckless.org/patches/bold-is-not-bright/st-bold-is-not-bright-20190127-3be4cf1.diff";
-          sha256 = "MpFprKx86vkBmV1uCJeRMIm3mdjNFQx/BMkC9KW46rI=";
-        }
-        {
-          url = "https://st.suckless.org/patches/dracula/st-dracula-0.8.5.diff";
-          sha256 = "H/6vLEJZdtB1rJOypWWFZLka41AdKhMZKRipLvwgvlE=";
-        }
-
-
-
-      ];
-  };
-}) ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
