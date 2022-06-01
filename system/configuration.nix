@@ -44,6 +44,12 @@ in
    services.xserver.displayManager.lightdm.enable = true;
    services.xserver.windowManager.dwm.enable = true;
 
+  services.xserver = {
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 50;
+  };
+
+
   # Configure keymap in X11
    services.xserver.layout = "br";
   # services.xserver.xkbOptions = "eurosign:e";

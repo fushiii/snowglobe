@@ -3,5 +3,6 @@
 imports = [
 ./st
 ./dwm
+./dmenu
 ];
   }

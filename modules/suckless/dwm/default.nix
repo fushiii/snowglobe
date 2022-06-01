@@ -1,15 +1,17 @@
-{pkgs, ...}:
-{
+{pkgs,lib,...}:
 
+{
 nixpkgs.overlays = [
     (final: prev: {
       dwm = prev.dwm.overrideAttrs (old: { 
         src = builtins.fetchTarball 
         {
-          
-          url = "https://github.com/lukesmithxyz/dwm/archive/master.tar.gz";
-          sha256 = "1dipcgh19cm23vgwyib4d1hy51vd0ra17ajdfv9mjrx7psyc3ll9";
+       
+          url = "https://github.com/Fushiii/dwm/archive/master.tar.gz";
+          sha256 = "1bcmzif9nv4g3gnn5n53slsc5agmxfszx4h5lmajcdrxmk0h7sr5";
+
         };
+        nativeBuildInputs = with pkgs; [ xorg.libX11 imlib2];
       });
     })
 ];
