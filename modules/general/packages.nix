@@ -25,7 +25,9 @@
    gnome.zenity
    pamixer
    dmenu
-  ];
+  ];  
+  
+
 
 
 }

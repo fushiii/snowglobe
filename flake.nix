@@ -15,7 +15,7 @@
       config = { allowUnfree = true; };
     };
 
-    lib = nixpkgs.lib;
+  lib = nixpkgs.lib;
   
   in {
         
