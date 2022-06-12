@@ -10,43 +10,43 @@
   environment.systemPackages = with pkgs; [
 
 
-# Utils   
-   stow 
-   dmenu
-   flameshot
-   killall
-   sxhkd
+    # Utils   
+    stow
+    dmenu
+    flameshot
+    killall
+    sxhkd
 
-# Media   
-   vlc
- 
- # Browsers
-   chromium
-   firefox
-   
-   #Eye Candy
-   
-   xorg.xrdb
-   picom
-   imwheel
-   breeze-icons
-   gnome.zenity
-   feh
-   glib
+    # Media   
+    vlc
 
-   # File Managers
+    # Browsers
+    chromium
+    firefox
 
-   rar
-   unrar
+    #Eye Candy
 
-   # Audio
+    xorg.xrdb
+    picom
+    imwheel
+    breeze-icons
+    gnome.zenity
+    feh
+    glib
 
-   pamixer
-   pavucontrol
-   minigalaxy
+    # File Managers
 
-  ];  
-  
+    rar
+    unrar
+
+    # Audio
+
+    pamixer
+    pavucontrol
+    minigalaxy
+
+  ];
+
 
 
 

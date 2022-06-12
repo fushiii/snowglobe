@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
@@ -14,23 +15,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/cc4db938-d5d9-4d62-b80e-42678f290e52";
+    {
+      device = "/dev/disk/by-uuid/cc4db938-d5d9-4d62-b80e-42678f290e52";
       fsType = "btrfs";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/46967f9d-e4e0-4dcf-9021-96c7d0d9626f";
+    {
+      device = "/dev/disk/by-uuid/46967f9d-e4e0-4dcf-9021-96c7d0d9626f";
       fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FA8B-04D1";
+    {
+      device = "/dev/disk/by-uuid/FA8B-04D1";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/0a70b966-cc14-4520-b27d-b42a2583e71a"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/0a70b966-cc14-4520-b27d-b42a2583e71a"; }];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -1,11 +1,11 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   imports = [
-  ./development
-  ./drivers
-  ./general
-  ./windowManager
-  ./suckless
-  ./shells
+    ./development
+    ./drivers
+    ./general
+    ./windowManager
+    ./suckless
+    ./shells
   ];
- }
+}

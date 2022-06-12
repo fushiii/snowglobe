@@ -1,13 +1,13 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
-imports = [
+  imports = [
 
-./packages
-./fonts
-./thunar
-./polkit
-./steam
-];
+    ./packages
+    ./fonts
+    ./thunar
+    ./polkit
+    ./steam
+  ];
 
-  }
+}

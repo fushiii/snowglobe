@@ -1,8 +1,8 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
-imports = [
-./st
-./dwm
-./dmenu
-];
-  }
+  imports = [
+    ./st
+    ./dwm
+    ./dmenu
+  ];
+}

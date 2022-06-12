@@ -1,10 +1,10 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 
 {
-imports = [
-./intel
+  imports = [
+    ./intel
 
-];
+  ];
 
-  }
+}

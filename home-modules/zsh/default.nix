@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let vars = import ./vars.nix;
-in {
+in
+{
 
   # robbyrussell/oh-my-zsh folder:lib/completion
 
@@ -21,12 +22,12 @@ in {
 
   programs.zsh = {
     enable = true;
-    
+
     enableAutosuggestions = true;
     enableCompletion = true;
     autocd = true;
     dotDir = ".config/zsh";
-    
+
     sessionVariables = {
       #RPS1 = ""; # Disable the right side prompt that "walters" theme introduces
       PS1 = "%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b ";
@@ -142,7 +143,7 @@ in {
           rev = "932e29a0c75411cb618f02995b66c0a4a25699bc";
         };
       }
-      
+
     ];
   };
 

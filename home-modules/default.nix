@@ -1,7 +1,7 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
-imports = [
-./zsh
+  imports = [
+    ./zsh
 
-];
+  ];
 }

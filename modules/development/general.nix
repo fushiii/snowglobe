@@ -1,8 +1,8 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-	  gnumake
+    gnumake
     # Java
     gradle
     jdk
@@ -15,11 +15,11 @@
     dotnet-runtime
     # Python
     python
-    
+
     # Database
     mariadb
 
- ];
+  ];
 
 
 }

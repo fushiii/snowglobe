@@ -1,10 +1,10 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
-imports = [
-./general.nix
-./editor.nix
-./terminal.nix
-];
+  imports = [
+    ./general.nix
+    ./editor.nix
+    ./terminal.nix
+  ];
 
-  }
+}

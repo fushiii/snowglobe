@@ -10,19 +10,20 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-  ];
+    ];
 
-  
-# Enable ntfs
- boot.supportedFilesystems = [ "ntfs" ];
 
-#Allow unfree packages
- nixpkgs.config.allowUnfree = true;
+  # Enable ntfs
+  boot.supportedFilesystems = [ "ntfs" ];
 
-# Boot loader
-  
+  #Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # Boot loader
+
   boot.loader = {
     systemd-boot.enable = false;
     efi = {
@@ -33,7 +34,7 @@ in
       devices = [ "nodev" ];
       enable = true;
       efiSupport = true;
-     # useOSProber = true;
+      # useOSProber = true;
     };
   };
   # Set the timezone
@@ -41,7 +42,7 @@ in
 
   networking.wireless.enable = true;
   networking.hostName = "${host}"; # Define your hostname.
-  
+
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
@@ -55,71 +56,71 @@ in
   };
 
   # Enable the X11 windowing system.
-   services.xserver.enable = true;
-  
+  services.xserver.enable = true;
+
   # Configure keymap in X11
-   services.xserver.layout = "br";
-  
+  services.xserver.layout = "br";
+
   # Change the keyboard repeat rate for X11.
-  
+
   services.xserver = {
     autoRepeatDelay = 200;
     autoRepeatInterval = 50;
   };
 
   # Enable imwheel 
-   services.xserver.imwheel.enable = true;
+  services.xserver.imwheel.enable = true;
   # Enable lightdm 
-   services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
 
-  
+
   # Enable sound.
-   sound.enable = true;
-   hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
 
   programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.${user} = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "storage" "optic"]; # Enable ‘sudo’ for the user.
-     shell = pkgs.fish;
-   };
+  users.users.${user} = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "storage" "optic" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
+  };
 
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
- 
- nix = {
+
+  nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
     autoOptimiseStore = true;
-       gc = {
-         automatic = true;
-	       dates = "weekly";
-	       options = "--delete-older-than 7d";
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
 
-       };
- };
- 
-   environment.sessionVariables = rec {
-    "_JAVA_OPTIONS"="-Dawt.useSystemAAFontSettings=lcd";
+    };
+  };
+
+  environment.sessionVariables = rec {
+    "_JAVA_OPTIONS" = "-Dawt.useSystemAAFontSettings=lcd";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  
-   programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-  
+
   # Start the ssh-agent
   # programs.ssh.startAgent = true; 
 

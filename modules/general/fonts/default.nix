@@ -1,7 +1,7 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
- fonts.fonts = with pkgs; [
+  fonts.fonts = with pkgs; [
     fira-code
     fira
     cooper-hewitt

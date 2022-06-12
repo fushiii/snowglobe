@@ -1,8 +1,8 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 {
-imports = [
-  ./sway
-];
+  imports = [
+    ./sway
+  ];
 
-  }
+}
