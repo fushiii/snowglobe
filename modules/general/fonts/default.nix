@@ -1,6 +1,5 @@
 {pkgs, ...}:
 
-
 {
  fonts.fonts = with pkgs; [
     fira-code
@@ -9,7 +8,7 @@
     font-awesome
     ibm-plex
     jetbrains-mono
-    iosevka
+    #iosevka
     # bitmap
     spleen
     fira-code-symbols

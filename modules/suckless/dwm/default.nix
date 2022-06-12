@@ -1,18 +1,18 @@
-{pkgs,lib,...}:
+{ pkgs, lib, ... }:
 
 {
-nixpkgs.overlays = [
+  services.xserver.windowManager.dwm.enable = true;
+
+  nixpkgs.overlays = [
     (final: prev: {
-      dwm = prev.dwm.overrideAttrs (old: { 
-        src = builtins.fetchTarball 
-        {
-       
+      dwm = prev.dwm.overrideAttrs (old: {
+        src = builtins.fetchTarball {
           url = "https://github.com/Fushiii/dwm/archive/master.tar.gz";
-          sha256 = "1bcmzif9nv4g3gnn5n53slsc5agmxfszx4h5lmajcdrxmk0h7sr5";
+          sha256 = "1vas90hcs1wmvd0yqp8faxvmckjhr4jqy8dqvxk87dk0bwdcvwid";
 
         };
-        nativeBuildInputs = with pkgs; [ xorg.libX11 imlib2];
+        nativeBuildInputs = with pkgs; [ xorg.libX11 imlib2 ];
       });
     })
-];
+  ];
 }

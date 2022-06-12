@@ -5,7 +5,8 @@
   vscode
   neovim
   vim
-
+  netbeans
+jetbrains.idea-community
   ];
 
 

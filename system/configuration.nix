@@ -14,22 +14,39 @@ in
       ./hardware-configuration.nix
   ];
 
+  
+# Enable ntfs
+ boot.supportedFilesystems = [ "ntfs" ];
 
-  boot.supportedFilesystems = [ "ntfs" ];
-  #Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+#Allow unfree packages
+ nixpkgs.config.allowUnfree = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+# Boot loader
+  
+  boot.loader = {
+    systemd-boot.enable = false;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
+      devices = [ "nodev" ];
+      enable = true;
+      efiSupport = true;
+     # useOSProber = true;
+    };
+  };
+  # Set the timezone
+  time.timeZone = "America/Sao_Paulo";
 
-   networking.hostName = "${host}"; # Define your hostname.
-
-   time.timeZone = "America/Sao_Paulo";
-
+  networking.wireless.enable = true;
+  networking.hostName = "${host}"; # Define your hostname.
   
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
+
+  # Console Configuration 
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -39,39 +56,36 @@ in
 
   # Enable the X11 windowing system.
    services.xserver.enable = true;
-   services.xserver.imwheel.enable = true;
-   services.xserver.displayManager.lightdm.enable = true;
-   services.xserver.windowManager.dwm.enable = true;
-
+  
+  # Configure keymap in X11
+   services.xserver.layout = "br";
+  
+  # Change the keyboard repeat rate for X11.
+  
   services.xserver = {
     autoRepeatDelay = 200;
     autoRepeatInterval = 50;
   };
 
+  # Enable imwheel 
+   services.xserver.imwheel.enable = true;
+  # Enable lightdm 
+   services.xserver.displayManager.lightdm.enable = true;
 
-  # Configure keymap in X11
-   services.xserver.layout = "br";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
+  
   # Enable sound.
    sound.enable = true;
    hardware.pulseaudio.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-
-   programs.fish.enable = true;
-   programs.ssh.startAgent = true; 
    users.users.${user} = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "storage" "optic"]; # Enable ‘sudo’ for the user.
      shell = pkgs.fish;
    };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -87,19 +101,28 @@ in
 
        };
  };
+ 
+   environment.sessionVariables = rec {
+    "_JAVA_OPTIONS"="-Dawt.useSystemAAFontSettings=lcd";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  
+   programs.mtr.enable = true;
+   programs.gnupg.agent = {
+     enable = true;
+     enableSSHSupport = true;
+   };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
+  
+  # Start the ssh-agent
+  # programs.ssh.startAgent = true; 
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

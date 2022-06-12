@@ -1,5 +1,4 @@
 {pkgs, ...}:
-
 {
   imports = [
   ./development
@@ -7,5 +6,6 @@
   ./general
   ./windowManager
   ./suckless
-];
-  }
+  ./shells
+  ];
+ }

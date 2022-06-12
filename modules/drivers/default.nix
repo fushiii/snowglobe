@@ -3,7 +3,7 @@
 
 {
 imports = [
-./intel.nix
+./intel
 
 ];
 

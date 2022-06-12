@@ -1,8 +1,7 @@
 {pkgs, ...}:
-
 {
 imports = [
-  ./sway
-];
+./zsh
 
-  }
+];
+}

@@ -3,9 +3,11 @@
 {
 imports = [
 
-./packages.nix
-./fonts.nix
-
+./packages
+./fonts
+./thunar
+./polkit
+./steam
 ];
 
   }
