@@ -1,8 +1,8 @@
-{ pkgs, config, ... }:
+{pkgs, config, ...}:
 {
   imports = [
     ./fish
+    ./zsh
   ];
 
 }
-

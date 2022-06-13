@@ -79,7 +79,6 @@ in
   hardware.pulseaudio.enable = true;
 
   programs.fish.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
@@ -94,13 +93,6 @@ in
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
-    autoOptimiseStore = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-
-    };
   };
 
   environment.sessionVariables = rec {

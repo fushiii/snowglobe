@@ -6,6 +6,5 @@
     ./general
     ./windowManager
     ./suckless
-    ./shells
   ];
 }

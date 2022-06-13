@@ -3,7 +3,7 @@
 {
   imports = [
 
-    ./packages
+    ./pkgs
     ./fonts
     ./thunar
     ./polkit
