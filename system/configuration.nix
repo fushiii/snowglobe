@@ -14,7 +14,13 @@ in
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
+  systemd.user.services.auth-agent = {
+    script = ''
+       "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+    '';
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+  };
 
   # Enable ntfs
   boot.supportedFilesystems = [ "ntfs" ];
@@ -34,7 +40,60 @@ in
       devices = [ "nodev" ];
       enable = true;
       efiSupport = true;
-      # useOSProber = true;
+     # useOSProber = true;
+      extraEntries = ''
+      menuentry 'Arch Linux (on /dev/sda8)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
+	insmod part_gpt
+	insmod ext2
+	set root='hd0,gpt8'
+	if [ x$feature_platform_search_hint = xy ]; then
+	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+	else
+	  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+	fi
+	linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
+	initrd /boot/initramfs-linux-positron.img
+}
+submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'osprober-gnulinux-advanced-1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
+	menuentry 'Arch Linux (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt8'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		else
+		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		fi
+		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
+		initrd /boot/initramfs-linux-positron.img
+	}
+	menuentry 'Arch Linux, with Linux linux-positron (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt8'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		else
+		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		fi
+		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
+		initrd /boot/initramfs-linux-positron.img
+	}
+	menuentry 'Arch Linux, with Linux linux-positron (fallback initramfs) (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt8'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		else
+		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
+		fi
+		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
+		initrd /boot/initramfs-linux-positron-fallback.img
+	}
+      
+      
+      '';
     };
   };
   # Set the timezone
@@ -71,7 +130,19 @@ in
   # Enable imwheel 
   services.xserver.imwheel.enable = true;
   # Enable lightdm 
-  services.xserver.displayManager.lightdm.enable = true;
+
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    theme = "sugar-dark";
+
+  };
+  environment.systemPackages = let themes = pkgs.callPackage ../modules/sddm {}; in [ 
+    # this doesn't do much, but makes it easier to see the settings
+    pkgs.sddm-kcm
+    themes.sddm-sugar-dark
+    pkgs.libsForQt5.qt5.qtquickcontrols
+    pkgs.libsForQt5.qt5.qtgraphicaleffects
+  ];
 
 
   # Enable sound.

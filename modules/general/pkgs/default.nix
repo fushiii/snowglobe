@@ -16,6 +16,7 @@
     flameshot
     killall
     sxhkd
+    nixpkgs-fmt
 
     # Media   
     vlc
@@ -35,16 +36,17 @@
     glib
 
     # File Managers
-
+    dolphin
+    unzip
     rar
     unrar
+
 
     # Audio
 
     pamixer
     pavucontrol
-    minigalaxy
-
+    mate.mate-polkit
   ];
 
 
