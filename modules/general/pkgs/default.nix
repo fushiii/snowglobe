@@ -5,7 +5,7 @@
 { pkgs, ... }:
 
 {
-
+  imports = [./polkit ./thunar ./sddm ];
 
   environment.systemPackages = with pkgs; [
 
@@ -36,7 +36,9 @@
     glib
 
     # File Managers
-    dolphin
+    
+    gnome.nautilus
+    
     unzip
     rar
     unrar

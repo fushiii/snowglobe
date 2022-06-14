@@ -5,6 +5,5 @@
     ./drivers
     ./general
     ./windowManager
-    ./suckless
   ];
 }

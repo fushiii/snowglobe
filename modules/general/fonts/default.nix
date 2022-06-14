@@ -14,6 +14,7 @@
     fira-code-symbols
     powerline-fonts
     nerdfonts
+    inconsolata
   ];
 
 

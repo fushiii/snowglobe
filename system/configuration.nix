@@ -14,13 +14,6 @@ in
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  systemd.user.services.auth-agent = {
-    script = ''
-       "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
-    '';
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-  };
 
   # Enable ntfs
   boot.supportedFilesystems = [ "ntfs" ];
@@ -129,21 +122,6 @@ submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'o
 
   # Enable imwheel 
   services.xserver.imwheel.enable = true;
-  # Enable lightdm 
-
-  services.xserver.displayManager.sddm = {
-    enable = true;
-    theme = "sugar-dark";
-
-  };
-  environment.systemPackages = let themes = pkgs.callPackage ../modules/sddm {}; in [ 
-    # this doesn't do much, but makes it easier to see the settings
-    pkgs.sddm-kcm
-    themes.sddm-sugar-dark
-    pkgs.libsForQt5.qt5.qtquickcontrols
-    pkgs.libsForQt5.qt5.qtgraphicaleffects
-  ];
-
 
   # Enable sound.
   sound.enable = true;

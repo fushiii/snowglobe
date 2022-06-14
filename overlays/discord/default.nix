@@ -2,19 +2,17 @@
 
 {
   environment.systemPackages = with pkgs; [
-    discord
+  discord
   ];
 
-  nixpkgs.overlays = [
+ nixpkgs.overlays = [ # This overlay will pull the latest version o discord
+    
     (self: super: {
       discord = super.discord.overrideAttrs (
-        _: {
-          src = builtins.fetchTarball {
-            url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-            sha256 = "0cdswzb0ajv37jpx5m54nlqxb4xh0hygdl2pg40nr41f6f3ydc8h";
-          };
-          nativeBuildInputs = with pkgs; [ xorg.libX11 xorg.libXinerama xorg.libXft ];
-        }
+        _: { src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
+          sha256 = "1bhjalv1c0yxqdra4gr22r31wirykhng0zglaasrxc41n0sjwx0m";
+        };}
       );
     })
   ];

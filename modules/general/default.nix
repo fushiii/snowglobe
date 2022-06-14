@@ -5,9 +5,6 @@
 
     ./pkgs
     ./fonts
-    ./thunar
-    ./polkit
-    ./steam
   ];
 
 }

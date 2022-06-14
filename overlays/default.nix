@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
   imports = [
-    #./discord
+    ./discord
+    ./suckless
   ];
 
 }
