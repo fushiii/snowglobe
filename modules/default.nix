@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./development
+    ./dev
     ./drivers
     ./general
     ./windowManager

@@ -20,7 +20,7 @@
 
     # Media   
     vlc
-
+    nomacs
     # Browsers
     chromium
     firefox

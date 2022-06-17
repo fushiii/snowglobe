@@ -21,72 +21,20 @@ in
   #Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Boot loader
+ # Boot loader
 
   boot.loader = {
     systemd-boot.enable = false;
     efi = {
       canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
+      efiSysMountPoint = "/boot/efi";
     };
     grub = {
       devices = [ "nodev" ];
       enable = true;
       efiSupport = true;
-     # useOSProber = true;
-      extraEntries = ''
-      menuentry 'Arch Linux (on /dev/sda8)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
-	insmod part_gpt
-	insmod ext2
-	set root='hd0,gpt8'
-	if [ x$feature_platform_search_hint = xy ]; then
-	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-	else
-	  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-	fi
-	linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
-	initrd /boot/initramfs-linux-positron.img
-}
-submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'osprober-gnulinux-advanced-1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
-	menuentry 'Arch Linux (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
-		insmod part_gpt
-		insmod ext2
-		set root='hd0,gpt8'
-		if [ x$feature_platform_search_hint = xy ]; then
-		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		else
-		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		fi
-		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
-		initrd /boot/initramfs-linux-positron.img
-	}
-	menuentry 'Arch Linux, with Linux linux-positron (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
-		insmod part_gpt
-		insmod ext2
-		set root='hd0,gpt8'
-		if [ x$feature_platform_search_hint = xy ]; then
-		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		else
-		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		fi
-		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
-		initrd /boot/initramfs-linux-positron.img
-	}
-	menuentry 'Arch Linux, with Linux linux-positron (fallback initramfs) (on /dev/sda8)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-linux-positron--1f321979-95d3-464b-a6c2-5d5b9fe1fbae' {
-		insmod part_gpt
-		insmod ext2
-		set root='hd0,gpt8'
-		if [ x$feature_platform_search_hint = xy ]; then
-		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt8 --hint-efi=hd0,gpt8 --hint-baremetal=ahci0,gpt8  1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		else
-		  search --no-floppy --fs-uuid --set=root 1f321979-95d3-464b-a6c2-5d5b9fe1fbae
-		fi
-		linux /boot/vmlinuz-linux-positron root=UUID=1f321979-95d3-464b-a6c2-5d5b9fe1fbae rw loglevel=3 quiet
-		initrd /boot/initramfs-linux-positron-fallback.img
-	}
-      
-      
-      '';
+      useOSProber = true;
+
     };
   };
   # Set the timezone
@@ -95,11 +43,28 @@ submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'o
   networking.wireless.enable = true;
   networking.hostName = "${host}"; # Define your hostname.
 
+
+
+  # Netowrk configuration
+
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
 
-  # Console Configuration 
+  # Remove wpa_supplicant error
+
+  networking.wireless.userControlled.enable = true;
+
+  # Start a authentication agent
+  systemd.user.services.auth-agent = {
+    script = ''
+       "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+    '';
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+  };
+
+  # Console Configuration
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -120,13 +85,13 @@ submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'o
     autoRepeatInterval = 50;
   };
 
-  # Enable imwheel 
+  # Enable imwheel
   services.xserver.imwheel.enable = true;
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
+  # Shell
   programs.fish.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
@@ -134,7 +99,6 @@ submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'o
     extraGroups = [ "wheel" "storage" "optic" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
   };
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -161,10 +125,8 @@ submenu 'Advanced options for Arch Linux (on /dev/sda8)' $menuentry_id_option 'o
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
   # Start the ssh-agent
-  # programs.ssh.startAgent = true; 
-
+  # programs.ssh.startAgent = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

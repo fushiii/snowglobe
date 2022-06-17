@@ -2,9 +2,9 @@
 {
   imports = [
     ./shells
-
-
   ];
+  home.file.".tmux.conf".source = ./confs/tmux.conf;
+  
   # home.file.".bashrc".source = ./confs/bashrc;
   # xdg.configFile."kitty/kitty.conf".source = ./confs/kitty.conf;
   # xdg.configFile."alacritty/alacritty.yml".source = ./confs/alacritty.yml;

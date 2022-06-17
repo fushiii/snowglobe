@@ -1,14 +1,33 @@
-# Fix some utf-8 errors
-set -gx LC_ALL en_CA.UTF-8
 
-# gnome-keyring insists on setting this to itself, even if ssh support is disabled
-set -x SSH_AUTH_SOCK "/run/user/1000/gnupg/S.gpg-agent.ssh"
 
-# tuuuuuuuurbofish!
-set fish_greeting ''
+
+set fish_greeting ""
+set -gx TERM xterm-256color
+set -g theme_color_scheme terminal-dark
+
+
+# Ruby path
+
+# export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+# export PATH="$PATH:$GEM_HOME/bin"
+
+# -----
+# theme
+# ----- 
+# command to install: curl -fsSL https://starship.rs/install.sh | bash
 
 direnv hook fish | source
 
 starship init fish | source
 
 
+set -gx EDITOR nvim
+
+set -gx PATH bin $PATH
+set -gx PATH ~/bin $PATH
+set -gx PATH ~/.local/bin $PATH
+
+set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
+if test -f $LOCAL_CONFIG
+  source $LOCAL_CONFIG
+end
